@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+  <html>
+    <head>
+      <!--
+      <style>
+        button {
+          height: 30px;
+          width: 30px;
+          outline: none;
+        }
+      </style>
+    -->
+    </head>
+    <body>
+      <h2> Tempalate de Jira pour feature etc... </h2>
+      <div style="display:block, border:solid">
+      <p id="mainText">
+        {panel:title=Description|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF} <br>
+        {panel} <br>
+        {panel:title=Business Rules|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF} <br>
+        {panel}
+      </p>
+      <br>
+      <br>
+      <br>
+      <p id="mainText">
+        h2. {color:#d04437}Feature{color} <br>
+        ---- <br>
+        h2. {color:#d04437}Description{color} <br>
+        ----
+      </p>
+      </div>
+      <div>
+<input id="goToJira" style="background-color:#1F4591; color:white" type="button" value="Go to Jira" />
+      </div>
+      <script src="popup.js"></script>
+    </body>
+  </html>
