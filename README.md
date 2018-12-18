@@ -1,5 +1,3 @@
-# hello-world
-just another repository
-hello Humans, 
+# A simple chrome extension
 
-Now i'me really interested into coding and i'm starting to learn. Cya soon aligators !
+ Helping get something more out of Jira Platform
