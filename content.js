@@ -17,17 +17,16 @@ let doneProgress = Math.ceil(Number(inProgress)/(totalComplexity)*100);
 
 
 //Progress Bar handling
-let myProgressBar = `<div id="mySprintBar" class="progress" style="margin-left:25px; margin-right:25px">
-  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${doneProgress}%" aria-valuenow="${doneProgress}" aria-valuemin="0" aria-valuemax="100">${doneProgress}% in progress </div>
+let myProgressBar = `<div class="progress" style="margin-left:25px; margin-right:25px">
+  <div id="mySprintBar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: ${doneProgress}%" aria-valuenow="${doneProgress}" aria-valuemin="0" aria-valuemax="100">${doneProgress}% in progress </div>
 </div>
 `
+document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("afterEnd",myProgressBar);
 //function alertBasic(variable,elemClass){
 //let alertMessage = `<div class="alert alert-primary" role="alert">hello world</div>`;
 //  document.getElementsByClassName(elem).insertAdjacentHTML(alertMessage)
 //}
 //alertBasic('hello  world',ghx-assigned-work-stats)
-document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("afterEnd",myProgressBar);
-
 
 // Code permettant d'afficher la complexité d'un sprint sur la page de bienvenue du dashboard JIRA:
 
@@ -38,9 +37,16 @@ const congratsText = '<div style="margin-top:10px" class="alert alert-primary" r
 document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
 
 if (Number(notStarted) == 0) {
-      const congratsText = '<div class="alert alert-primary" role="alert"> <strong>Félicitations </strong> !! Toutes les tâches sont commencées ;) </div>';
+      const allTasksStarted = '<div class="alert alert-primary" role="alert"> <b> Félicitations </b> !! Toutes les tâches sont commencées ;) </div>';
       document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
       };
+if (Number(done)==totalComplexity){
+  const allTasksDone = '<div class="alert alert-success" role="alert"> Toutes les tâches sont terminée bravoooo ! </div>'
+  let mySprintBar = document.getElementById('mySprintBar');
+  mySprintBar.setAttribute("style","width=100%")
+  mySprintBar.setAttribute("aria-valuenow","100")
+  mySprintBar.setAttribute("class","progress-bar progress-bar-success progress-bar-striped active")
+}
 
 // Code permettant d'afficher la complexité d'un JIRA sur un déjà déjà crée:
 
@@ -52,6 +58,20 @@ if (isJiraCreated != undefined){
   isJiraCreated.insertAdjacentHTML("afterend",myComplexity);
 }
 
+//Alert user about critical Jiras or Major Ones
+let nbJiraCritique = document.querySelectorAll('[title="Critique"]').length
+let nbJiraMajeur = document.querySelectorAll('[title="Majeur"]').length
+let nbJiraBloquant = document.querySelectorAll('[title="Bloquant"]').length
+
+if (nbJiraCritique != 0){
+  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraCritique} </b> jira critique dans le backlog </div>`;
+  document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
+}
+if (nbJiraBloquant != 0){
+  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraBloquant} </b> jira bloquant dans le backlog </div>`;
+  document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
+}
+const allTasksDone = '<div class="alert alert-success" role="alert"> Toutes les tâches sont terminée bravoooo ! </div>'
 
 
 
