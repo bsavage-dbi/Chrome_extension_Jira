@@ -13,19 +13,34 @@ let notStarted = document.getElementsByClassName('ghx-not-started')[0].innerText
 let done = document.getElementsByClassName('ghx-done')[0].innerText;
 
 let totalComplexity = Number(inProgress) + Number(notStarted) + Number(done);
+let doneProgress = Math.ceil(Number(inProgress)/(totalComplexity)*100);
+
+
+//Progress Bar handling
+let myProgressBar = `<div id="mySprintBar" class="progress" style="margin-left:25px; margin-right:25px">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: ${doneProgress}%" aria-valuenow="${doneProgress}" aria-valuemin="0" aria-valuemax="100">${doneProgress}% in progress </div>
+</div>
+`
+//function alertBasic(variable,elemClass){
+//let alertMessage = `<div class="alert alert-primary" role="alert">hello world</div>`;
+//  document.getElementsByClassName(elem).insertAdjacentHTML(alertMessage)
+//}
+//alertBasic('hello  world',ghx-assigned-work-stats)
+document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("afterEnd",myProgressBar);
+
 
 // Code permettant d'afficher la complexité d'un sprint sur la page de bienvenue du dashboard JIRA:
 
 const complexityText = `<p> Sprint Complexity is ${totalComplexity} points </p>`;
 document.getElementsByClassName('ghx-issue-count')[0].innerHTML= complexityText;
 
+const congratsText = '<div style="margin-top:10px" class="alert alert-primary" role="alert"> <strong>Félicitations <strong> !! Toutes les tâches du sprint sont commencées ;) </div>';
+document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
+
 if (Number(notStarted) == 0) {
-  function displayCongrats(){
-      const congratsText = '<p style="font-size:14px, color:#0A3269"> Félicitations !! Toutes les tâches sont commencées ;) </p>';
-      document.getElementsByClassName('ghx-assigned-work-stats').after(congratsText);
+      const congratsText = '<div class="alert alert-primary" role="alert"> <strong>Félicitations </strong> !! Toutes les tâches sont commencées ;) </div>';
+      document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
       };
-   displayCongrats();
- };
 
 // Code permettant d'afficher la complexité d'un JIRA sur un déjà déjà crée:
 

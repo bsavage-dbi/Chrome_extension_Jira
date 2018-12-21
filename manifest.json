@@ -13,7 +13,7 @@
    {
      "matches": ["https://*.priceminister.atlassian.net/*"],
      "js": ["content.js"],
-     "css":["myStyles.css"]
+     "css":["myStyles.css","bootstrap.min.css"]
    }
  ],
  "page_action":{
