@@ -1,0 +1,28 @@
+{
+ "manifest_version": 2,
+ "name": "JiraPluginProduct",
+ "description": "A simple plugin to help product managers get the most out of there Jira dashboards.",
+ "version": "1.1",
+ "author": "Spyros ASPREAS",
+ "permissions": ["storage", "declarativeContent", "tabs", "<all_urls>"],
+ "background": {
+ "scripts":["background.js","jquery-3.00.slim.min.js"],
+ "persistent":false
+ },
+ "content_scripts": [
+   {
+     "matches": ["https://*.priceminister.atlassian.net/*"],
+     "js": ["content.js","jquery-3.00.slim.min.js","bootstrap.bundle.min.js"],
+     "css":["myStyles.css","bootstrap.min.css"]
+   }
+ ],
+ "browser_action":{
+ 	"default_popup":"popup.html",
+ 	"default_icon": {
+        "16": "jiraIcon.png"
+      }
+  },
+  "icons": {
+      "16": "jiraIcon.png"
+  }
+}
