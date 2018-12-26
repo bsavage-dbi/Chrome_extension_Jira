@@ -1,11 +1,14 @@
+//Message annoncant que le plugin est lancé dans la console.
 console.log("Le plugin Jira Chrome est opérationnel");
-let templateJira = '{panel:title=Description|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF} \n {panel}\n{panel:title=Business Rules|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF}\n{panel}</p>'
 
 // Message annoncant que le plugin est bien lancé.
 
 let text = '<p style="color:#0A3269; margin-right:20px"> <b> Vous utilisez actuellement le plugin Jira Chrome<b/><p/>';
 document.getElementById('breadcrumbs-container').innerHTML= text;
 
+// Calcul de la compexité plus des pourcentages de done.
+
+let templateJira = '{panel:title=Description|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF} \n {panel}\n{panel:title=Business Rules|titleBGColor=#1F4591 |borderColor=#1F4591 |titleColor=#FFFFFF}\n{panel}</p>'
 let isJiraCreation = document.getElementById('create-issue-dialog');
 
 let inProgress = document.getElementsByClassName('ghx-in-progress')[0].innerText;
@@ -22,22 +25,20 @@ let myProgressBar = `<div class="progress" style="margin-left:25px; margin-right
 </div>
 `
 document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("afterEnd",myProgressBar);
-//function alertBasic(variable,elemClass){
-//let alertMessage = `<div class="alert alert-primary" role="alert">hello world</div>`;
-//  document.getElementsByClassName(elem).insertAdjacentHTML(alertMessage)
-//}
-//alertBasic('hello  world',ghx-assigned-work-stats)
+
 
 // Code permettant d'afficher la complexité d'un sprint sur la page de bienvenue du dashboard JIRA:
 
-const complexityText = `<p> Sprint Complexity is ${totalComplexity} points </p>`;
+var complexityText = `<p> Sprint Complexity is ${totalComplexity} points </p>`;
 document.getElementsByClassName('ghx-issue-count')[0].innerHTML= complexityText;
 
-const congratsText = '<div style="margin-top:10px" class="alert alert-primary" role="alert"> <strong>Félicitations <strong> !! Toutes les tâches du sprint sont commencées ;) </div>';
+// Alerte sur le nombre de taches commencées, plus mise à jour de la progress bar.
+
+const congratsText = '<div style="margin-top:10px" class="alert alert-primary" role="alert"> <strong>Félicitations <strong> !! Toutes les tâches du sprint sont commencées ;)  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>';
 document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
 
 if (Number(notStarted) == 0) {
-      const allTasksStarted = '<div class="alert alert-primary" role="alert"> <b> Félicitations </b> !! Toutes les tâches sont commencées ;) </div>';
+      const allTasksStarted = '<div class="alert alert-primary"  role="alert"> <b> Félicitations </b> !! Toutes les tâches sont commencées ;) <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>';
       document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",congratsText);
       };
 if (Number(done)==totalComplexity){
@@ -58,47 +59,24 @@ if (isJiraCreated != undefined){
   isJiraCreated.insertAdjacentHTML("afterend",myComplexity);
 }
 
-//Alert user about critical Jiras or Major Ones
+//Alert user about critical Jiras or Bloquant Ones
 let nbJiraCritique = document.querySelectorAll('[title="Critique"]').length
 let nbJiraMajeur = document.querySelectorAll('[title="Majeur"]').length
 let nbJiraBloquant = document.querySelectorAll('[title="Bloquant"]').length
+let nbJiraBloquantCollection = document.querySelectorAll('[title="Bloquant"]')
 
 if (nbJiraCritique != 0){
-  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraCritique} </b> jira critique dans le backlog </div>`;
+  const alertJiraCritique =`<div class="alert alert-danger alert-dismissible" role="alert"> Attention il y a <b> ${nbJiraCritique} </b> jira critique dans le backlog. <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>`;
   document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
 }
 if (nbJiraBloquant != 0){
-  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraBloquant} </b> jira bloquant dans le backlog </div>`;
+  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraBloquant} </b> jira bloquant dans le backlog  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button></div>`;
   document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
 }
-const allTasksDone = '<div class="alert alert-success" role="alert"> Toutes les tâches sont terminée bravoooo ! </div>'
+const allTasksDone = '<div class="alert alert-success" role="alert"> Toutes les tâches sont terminée bravoooo !  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>'
 
 
-
-
-
-
-//let scrollButton = document.createElement('button');
-//scrollButton.setAttribute("id","myBtn");
-//scrollButton.setAttribute("title","Go to Top");
-//scrollButton.onclick = topFunction()
-//scrollButton.innerHTML="Top"
-
-//
-//function scrollFunction() {
-//  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-//  } else {
-//  }
-//
-// When the user clicks on the button, scroll to the top of the document
-//function topFunction() {
-//  document.body.scrollTop = 0; // For Safari
-//}
-
-
-
-
-  //if (len(isJiraCreation) != 0 ){
-  //	document.getElementById('customfield_10030').selectedIndex =  "5"
-  //	document.getElementById('description').firstChild.append(templateJira)
-//  }
+//Sending a message for Jira Bloquant to the background script
+chrome.runtime.sendMessage({nbJiraBloquant: `${nbJiraBloquant}`}, function() {
+  console.log(`sent: ${nbJiraBloquant} `)
+});

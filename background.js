@@ -1,14 +1,7 @@
 
-//  chrome.runtime.onInstalled.addListener(function() {
-//   chrome.storage.sync.set({color: '#0A3269'}, function() {
-//     console.log("The color is green.");
-//   });
-    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-      chrome.declarativeContent.onPageChanged.addRules([{
-        conditions: [new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: {hostEquals: 'priceminister.atlassian.net'},
-        })
-        ],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
-      }]);
-    })
+// Message Receiver to add a Badge Text with the number of Bloquant Jiras. 
+chrome.runtime.onMessage.addListener(
+  function(message, sender, sendResponse) {
+    chrome.browserAction.setBadgeText({text:message.nbJiraBloquant});
+    chrome.browserAction.setBadgeBackgroundColor({color:"red"})
+});
