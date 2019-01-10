@@ -55,7 +55,7 @@ let isJiraCreated = document.getElementById("releases-panel-container");
 
 if (isJiraCreated != undefined){
   let complexity = document.getElementsByClassName("sc-cTSLtG gDoBIS")[2].innerText
-  const myComplexity = ` <p> <b> Complexité </b> ${complexity} </p>`
+  var myComplexity = ` <p> <b> Complexité </b> ${complexity} </p>`
   isJiraCreated.insertAdjacentHTML("afterend",myComplexity);
 }
 
@@ -66,12 +66,12 @@ let nbJiraBloquant = document.querySelectorAll('[title="Bloquant"]').length
 let nbJiraBloquantCollection = document.querySelectorAll('[title="Bloquant"]')
 
 if (nbJiraCritique != 0){
-  const alertJiraCritique =`<div class="alert alert-danger alert-dismissible" role="alert"> Attention il y a <b> ${nbJiraCritique} </b> jira critique dans le backlog. <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>`;
+  var alertJiraCritique =`<div class="alert alert-danger alert-dismissible" role="alert"> Attention il y a <b> ${nbJiraCritique} </b> jira critique dans le backlog. <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>`;
   document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
 }
 if (nbJiraBloquant != 0){
-  const alertJiraCritique =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraBloquant} </b> jira bloquant dans le backlog  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button></div>`;
-  document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraCritique)
+  var alertJiraBloquant =`<div class="alert alert-danger" role="alert"> Attention il y a <b> ${nbJiraBloquant} </b> jira bloquant dans le backlog  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button></div>`;
+  document.getElementsByClassName('ghx-assigned-work-stats')[0].insertAdjacentHTML("beforeEnd",alertJiraBloquant)
 }
 const allTasksDone = '<div class="alert alert-success" role="alert"> Toutes les tâches sont terminée bravoooo !  <button type="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></button> </div>'
 
